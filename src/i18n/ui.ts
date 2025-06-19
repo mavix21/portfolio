@@ -1,12 +1,18 @@
-export const languages = {
+export const DEFAULT_LANGUAGE = "es";
+
+export const LANGUAGES = {
   es: "Español",
   en: "English",
 } as const;
 
-export const defaultLanguage = "es";
+export const LANGUAGES_KEYS = Object.keys(LANGUAGES) as (keyof typeof LANGUAGES)[];
+
+export type Language = keyof typeof LANGUAGES;
 
 export const ui = {
   es: {
+    "site.title": "Marcelo Vizcarra - Portafolio",
+    "site.description": "Desarrollador full-stack enfocado en soluciones elegantes, mantenibles y robustas de TypeScript y React para la web.",
     "home.title": "Marcelo Vizcarra",
     "home.description1":
       "Desarrollador full-stack enfocado en soluciones elegantes, mantenibles y robustas de TypeScript y React para la web.",
@@ -17,6 +23,8 @@ export const ui = {
     "home.exploreProjects": "Explorar mis proyectos",
   },
   en: {
+    "site.title": "Marcelo Vizcarra - Portfolio",
+    "site.description": "Full-stack developer focused on elegant, maintainable, and robust TypeScript and React solutions for the web.",
     "home.title": "Marcelo Vizcarra",
     "home.description1":
       "Full-stack developer focused on elegant, maintainable, and robust TypeScript and React solutions for the web.",
@@ -26,4 +34,4 @@ export const ui = {
       "Always learning and open to new connections—let's create meaningful tech together.",
     "home.exploreProjects": "Explore my projects",
   },
-} as const;
+} satisfies Record<Language, Record<string, string>>;
