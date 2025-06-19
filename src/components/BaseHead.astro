@@ -1,15 +1,68 @@
 ---
 import { Font } from "astro:assets";
+import {
+  getLangFromUrl,
+  getLocalizedPathname,
+  pathnameIsInLanguage,
+} from "../i18n/utils";
+import { DEFAULT_LANGUAGE, LANGUAGES_KEYS } from "../i18n/ui";
 
-const { title } = Astro.props;
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+const canonicalPathname = pathnameIsInLanguage(
+  Astro.url.pathname,
+  DEFAULT_LANGUAGE,
+)
+  ? Astro.url.pathname
+  : getLocalizedPathname(Astro.url.pathname, DEFAULT_LANGUAGE);
+const canonicalUrl = new URL(canonicalPathname, Astro.site);
+
+const alternateLanguages = LANGUAGES_KEYS;
+const alternateLinks = alternateLanguages.map((lang) => ({
+  href: new URL(getLocalizedPathname(Astro.url.pathname, lang), Astro.site),
+  hreflang: lang,
+}));
 ---
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="description" content="Astro description" />
-  <meta name="viewport" content="width=device-width" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="generator" content={Astro.generator} />
-  <title>{title}</title>
-  <Font cssVariable="--font-geist" preload />
-</head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Font preloads -->
+<Font cssVariable="--font-geist" preload />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+<!-- Canonical URL -->
+<!-- <link rel="canonical" href={canonicalUrl} /> -->
+
+<!-- Alternate URLs -->
+{
+  alternateLinks.map(({ href, hreflang }) => (
+    <link rel="alternate" href={href} hreflang={hreflang} />
+  ))
+}
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<!-- <meta property="og:image" content={image} /> -->
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
