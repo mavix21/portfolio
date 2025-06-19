@@ -1,15 +1,71 @@
 ---
-import "../styles/global.css";
 import BaseHead from "../components/BaseHead.astro";
-const { title } = Astro.props;
+import { getLangFromUrl } from "../i18n/utils";
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <!doctype html>
-<html lang="en">
-  <BaseHead {title} />
+<html lang={lang}>
+  <BaseHead title={title} description={description} />
   <body>
-    <main id="main">
-      <slot />
-    </main>
+    <div class="bg-background text-foreground flex h-screen w-screen p-6 overflow-hidden">
+      {/* Frame border */}
+      <div class="frame-border" />
+      
+      {/* Left Sidebar */}
+      <div class="sticky top-0 flex h-full w-64 flex-col pr-4 z-10 border-r border-border">
+        {/* Header Section */}
+        <div class="flex-shrink-0 pb-8">
+          {/* Logo */}
+          <!-- {Logo} -->
+           Logo
+          <!-- <DateTimeDisplay /> -->
+        </div>
+        
+        {/* Separator */}
+        <div class="w-full h-px bg-border mb-8"></div>
+        
+        {/* Main Navigation - Scrollable */}
+        <div class="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+          <!-- <Navigation /> -->
+        </div>
+        
+        {/* Separator */}
+        <div class="w-full h-px bg-border mt-8 mb-8"></div>
+        
+        {/* Footer Section */}
+        <div class="flex-shrink-0 flex flex-col gap-4">
+          <!-- <SocialLinks />
+          <ThemeSwitcher />
+          <LanguageSwitcher />
+          <MusicWidget /> {/* Music player widget at the bottom */} -->
+        </div>
+      </div>
+      
+      {/* Main Content Area */}
+      <div class="h-full flex-1 flex flex-col pl-8 z-10">
+        {/* Main Content */}
+        <div class="flex-1 overflow-y-auto">
+          <div class="animate-fade-in-up">
+            <slot />
+          </div>
+        </div>
+        
+        {/* Footer */}
+        <footer class="border-t border-border pt-4 mt-8">
+          <div class="text-center text-xs text-muted-foreground">
+            © 2024 All rights reserved
+          </div>
+        </footer>
+      </div>
+    </div>
   </body>
 </html>
