@@ -5,6 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://marcelovizcarra.com",
   vite: {
     plugins: [tailwindcss()],
   },
@@ -18,7 +19,11 @@ export default defineConfig({
     }]
   },
   i18n: {
-    locales: ["es", "en"],
-    defaultLocale: "es",
+    locales: ["en", "es"],
+    defaultLocale: "en",
+    routing: {
+      prefixDefaultLocale: true,
+      redirectToDefaultLocale: true
+    }
   }
 });
