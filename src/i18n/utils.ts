@@ -1,7 +1,7 @@
-import { DEFAULT_LANGUAGE, LANGUAGES, LANGUAGES_KEYS, ui, type Language } from "./ui";
+import { DEFAULT_LANGUAGE, LANGUAGES_KEYS, ui, type Language } from "./ui";
 
 // Pre-compile regex for better performance
-const LANGUAGE_PATH_REGEX = new RegExp(`^\/(${LANGUAGES_KEYS.join('|')})`);
+const LANGUAGE_PATH_REGEX = new RegExp(`^\/(${LANGUAGES_KEYS.join("|")})`);
 
 /**
  * Validates if a string is a valid language key
@@ -25,13 +25,13 @@ export function getLangFromUrl(url: URL): Language {
 
   // Split pathname and get the first segment after the leading slash
   const pathSegments = url.pathname.split("/").filter(Boolean);
-  
+
   if (pathSegments.length === 0) {
     return DEFAULT_LANGUAGE;
   }
 
   const potentialLang = pathSegments[0];
-  
+
   // Validate if it's a valid language
   if (isValidLanguage(potentialLang)) {
     return potentialLang;
@@ -50,13 +50,15 @@ export function useTranslations(lang?: Language) {
   ): string {
     // Validate language parameter
     const targetLang = lang && isValidLanguage(lang) ? lang : DEFAULT_LANGUAGE;
-    
+
     // Get translation with fallback
     let translation = ui[targetLang][key] || ui[DEFAULT_LANGUAGE][key];
-    
+
     // Handle missing translations
     if (!translation) {
-      console.warn(`Translation missing for key "${key}" in language "${targetLang}"`);
+      console.warn(
+        `Translation missing for key "${key}" in language "${targetLang}"`,
+      );
       return key; // Return the key as fallback
     }
 
@@ -65,11 +67,14 @@ export function useTranslations(lang?: Language) {
       for (let i = 0; i < args.length; i++) {
         const arg = args[i];
         if (arg !== null && arg !== undefined) {
-          translation = translation.replace(new RegExp(`\\{${i}\\}`, 'g'), String(arg));
+          translation = translation.replace(
+            new RegExp(`\\{${i}\\}`, "g"),
+            String(arg),
+          );
         }
       }
     }
-    
+
     return translation;
   };
 }
@@ -78,7 +83,7 @@ export function useTranslations(lang?: Language) {
  * Checks if a pathname starts with any valid language prefix
  */
 function pathnameStartsWithLanguage(pathname: string): boolean {
-  if (!pathname || typeof pathname !== 'string') {
+  if (!pathname || typeof pathname !== "string") {
     return false;
   }
 
@@ -89,8 +94,11 @@ function pathnameStartsWithLanguage(pathname: string): boolean {
 /**
  * Determines if a pathname is in the specified language
  */
-export function pathnameIsInLanguage(pathname: string, lang: Language): boolean {
-  if (!pathname || typeof pathname !== 'string' || !isValidLanguage(lang)) {
+export function pathnameIsInLanguage(
+  pathname: string,
+  lang: Language,
+): boolean {
+  if (!pathname || typeof pathname !== "string" || !isValidLanguage(lang)) {
     return false;
   }
 
@@ -107,7 +115,7 @@ export function pathnameIsInLanguage(pathname: string, lang: Language): boolean 
  * Converts a pathname to the specified language
  */
 export function getLocalizedPathname(pathname: string, lang: Language): string {
-  if (!pathname || typeof pathname !== 'string' || !isValidLanguage(lang)) {
+  if (!pathname || typeof pathname !== "string" || !isValidLanguage(lang)) {
     return `/${lang}`;
   }
 
@@ -128,13 +136,15 @@ export function getLocalizedPathname(pathname: string, lang: Language): string {
 /**
  * Gets all available languages for a given pathname
  */
-export function getLocalizedPathnames(pathname: string): Record<Language, string> {
+export function getLocalizedPathnames(
+  pathname: string,
+): Record<Language, string> {
   const result: Record<Language, string> = {} as Record<Language, string>;
-  
+
   for (const lang of LANGUAGES_KEYS) {
     result[lang] = getLocalizedPathname(pathname, lang);
   }
-  
+
   return result;
 }
 
@@ -142,7 +152,7 @@ export function getLocalizedPathnames(pathname: string): Record<Language, string
  * Extracts the base pathname without language prefix
  */
 export function getBasePathname(pathname: string): string {
-  if (!pathname || typeof pathname !== 'string') {
+  if (!pathname || typeof pathname !== "string") {
     return "/";
   }
 
