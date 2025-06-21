@@ -14,13 +14,22 @@ export default defineConfig({
   },
 
   experimental: {
-    fonts: [{
-      provider: fontProviders.google(),
-      name: "Geist",
-      cssVariable: "--font-geist",
-      subsets: ["latin"],
-      weights: [400, 500, 600, 700],
-    }]
+    fonts: [
+      {
+        provider: fontProviders.google(),
+        name: "Geist",
+        cssVariable: "--font-geist",
+        subsets: ["latin"],
+        weights: [300, 400, 500, 600, 700],
+      },
+      {
+        provider: fontProviders.google(),
+        name: "Newsreader",
+        cssVariable: "--font-newsreader",
+        subsets: ["latin"],
+        weights: [300, 400, 500, 600, 700],
+      },
+    ],
   },
 
   i18n: {
@@ -28,9 +37,9 @@ export default defineConfig({
     defaultLocale: "en",
     routing: {
       prefixDefaultLocale: true,
-      redirectToDefaultLocale: true
-    }
+      redirectToDefaultLocale: true,
+    },
   },
 
-  integrations: [react()]
+  integrations: [react()],
 });
