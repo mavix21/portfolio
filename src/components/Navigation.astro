@@ -80,6 +80,10 @@ const navSections = [
         <ul class="flex flex-col space-y-1">
           {section.items.map((item) => {
             const isActive = Astro.url.pathname === item.href;
+            console.log({
+              astroUrl: Astro.url.pathname,
+              itemHref: item.href,
+            });
             return (
               <li>
                 <a
