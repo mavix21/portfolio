@@ -5,7 +5,7 @@ interface Props {
   lang: Language;
 }
 
-export function DateTimeDisplay({ lang }: Props) {
+export default function DateTimeDisplay({ lang }: Props) {
   const [now, setNow] = React.useState(new Date());
 
   React.useEffect(() => {
@@ -21,7 +21,7 @@ export function DateTimeDisplay({ lang }: Props) {
 
   return (
     <>
-      <p className="font-sans text-xs text-muted-foreground mt-4 leading-tight">
+      <p className="mt-4 font-sans text-xs leading-tight text-muted-foreground">
         {dateString}
       </p>
       <p className="font-sans text-[11px] text-muted-foreground opacity-90">
