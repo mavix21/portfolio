@@ -152,13 +152,9 @@ const pathnames = getLocalizedPathnames(Astro.url.pathname);
         </div>
 
         {/* Main Content Area */}
-        <div
-          class="grid h-full flex-1 overflow-y-auto md:grid-rows-[1fr_auto] md:overflow-y-hidden"
-        >
+        <div class="grid h-full flex-1 overflow-y-auto">
           {/* Main Content */}
-          <div
-            class="animate-fade-in-up p-4 pt-16 md:h-full md:overflow-y-auto md:pt-24"
-          >
+          <div class="animate-fade-in-up p-4 pt-16 md:h-full md:pt-24">
             <slot />
           </div>
 
