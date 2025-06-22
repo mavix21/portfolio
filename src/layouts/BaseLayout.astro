@@ -1,8 +1,11 @@
 ---
-import { DateTimeDisplay } from "@/components/DateTimeDisplay";
+import DateTimeDisplay from "@/components/DateTimeDisplay";
 import BaseHead from "../components/BaseHead.astro";
-import { getLangFromUrl } from "../i18n/utils";
+import { getLangFromUrl, getLocalizedPathnames } from "../i18n/utils";
 import { Menu, X } from "lucide-react";
+import Navigation from "@/components/Navigation.astro";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 interface Props {
   title: string;
@@ -12,6 +15,7 @@ interface Props {
 const { title, description } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
+const pathnames = getLocalizedPathnames(Astro.url.pathname);
 ---
 
 <!doctype html>
@@ -26,14 +30,16 @@ const lang = getLangFromUrl(Astro.url);
 
       {/* Mobile Header */}
       <header
-        class="group sticky top-0 z-20 border bg-background/95 p-4 backdrop-blur-sm md:hidden"
+        class="group relative h-14 border bg-background/95 px-4 py-2 backdrop-blur-sm md:hidden"
       >
         <div class="flex items-center justify-between">
           {/* Logo */}
-          Logo
+          <a href="/" class="mt-1 font-serif text-2xl leading-none font-normal"
+            >MV</a
+          >
           <label
             for="mobile-menu-toggle"
-            class="relative z-40 cursor-pointer p-2 text-muted-foreground transition-colors hover:text-foreground"
+            class="relative z-10 cursor-pointer p-2 transition-colors hover:text-foreground"
             aria-label="Toggle menu"
           >
             <Menu size={24} className="group-peer-checked:hidden" />
@@ -44,7 +50,7 @@ const lang = getLangFromUrl(Astro.url);
 
       {/* Mobile Menu Overlay */}
       <div
-        class="group mobile-menu-overlay backdrop-blur-0 invisible fixed inset-0 top-18 z-10 opacity-0 transition-all duration-300 ease-in-out peer-checked:visible peer-checked:bg-background/75 peer-checked:opacity-100 peer-checked:backdrop-blur-sm"
+        class="group mobile-menu-overlay backdrop-blur-0 invisible fixed inset-0 top-14 z-10 opacity-0 transition-all duration-300 ease-in-out peer-checked:visible peer-checked:bg-background/75 peer-checked:opacity-100 peer-checked:backdrop-blur-sm"
       >
         <div
           class="flex h-full -translate-y-full transform flex-col px-6 pt-20 transition-transform duration-300 ease-in-out group-peer-checked:translate-y-0"
@@ -53,13 +59,21 @@ const lang = getLangFromUrl(Astro.url);
             <div
               class="translate-y-4 opacity-0 transition-all delay-100 duration-300 ease-in-out group-peer-checked:translate-y-0 group-peer-checked:opacity-100"
             >
-              Navigation
+              <Navigation lang={lang} />
             </div>
           </div>
           <div
             class="translate-y-4 pb-8 opacity-0 transition-all delay-200 duration-300 ease-in-out group-peer-checked:translate-y-0 group-peer-checked:opacity-100"
           >
-            <div class="flex flex-col gap-4">Footer</div>
+            <div class="flex flex-col gap-4">
+              <ThemeSwitcher lang={lang} className="-ml-4" client:visible />
+              <LanguageSwitcher
+                client:visible
+                lang={lang}
+                pathnames={pathnames}
+                className="-ml-4"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -74,9 +88,7 @@ const lang = getLangFromUrl(Astro.url);
         >
           {/* Header Section */}
           <div class="flex-shrink-0">
-            {/* Logo */}
-            <!-- {Logo} -->
-            Logo
+            <a href="/" class="font-serif text-2xl font-normal">MV</a>
             <DateTimeDisplay lang={lang} client:load />
           </div>
 
@@ -87,7 +99,7 @@ const lang = getLangFromUrl(Astro.url);
           <div
             class="scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent flex-1 overflow-y-auto"
           >
-            <!-- <Navigation /> -->
+            <Navigation />
           </div>
 
           {/* Separator */}
@@ -95,22 +107,20 @@ const lang = getLangFromUrl(Astro.url);
 
           {/* Footer Section */}
           <div class="flex flex-shrink-0 flex-col gap-4">
-            <!-- <SocialLinks />
-          <ThemeSwitcher />
-          <LanguageSwitcher />
-          <MusicWidget /> {/* Music player widget at the bottom */} -->
+            <ThemeSwitcher lang={lang} client:load />
+            <LanguageSwitcher lang={lang} pathnames={pathnames} />
           </div>
         </div>
 
         {/* Main Content Area */}
-        <div class="flex h-full flex-1 flex-col pl-4">
+        <div class="flex h-full flex-1 flex-col">
           {/* Main Content */}
-          <div class="animate-fade-in-up flex-1 overflow-y-auto">
+          <div class="flex-1 animate-fade-in-up overflow-y-auto md:pl-4">
             <slot />
           </div>
 
           {/* Footer */}
-          <footer class="border-t border-border pt-4">
+          <footer class="border-t border-border pt-4 md:ml-4">
             <div class="text-center text-xs text-muted-foreground">
               © 2024 All rights reserved
             </div>
