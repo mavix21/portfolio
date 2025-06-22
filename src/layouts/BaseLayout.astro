@@ -23,19 +23,36 @@ const pathnames = getLocalizedPathnames(Astro.url.pathname);
 ---
 
 <script is:inline>
+  // Theme management that works with Astro view transitions
   const getThemePreference = () => {
     if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
       return localStorage.getItem("theme");
     }
-
     return window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light";
   };
 
-  const isDark = getThemePreference() === "dark";
-  document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+  // Apply theme immediately to prevent flash
+  const applyTheme = () => {
+    const isDark = getThemePreference() === "dark";
+    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+  };
 
+  // Apply theme on initial load
+  applyTheme();
+
+  // Handle view transitions - reapply theme when DOM is replaced
+  if (typeof document !== "undefined") {
+    // Listen for view transition events
+    document.addEventListener("astro:page-load", applyTheme);
+    document.addEventListener("astro:after-swap", applyTheme);
+
+    // Also listen for navigation events that might not trigger the above
+    document.addEventListener("astro:before-preparation", applyTheme);
+  }
+
+  // Set up MutationObserver to persist theme changes to localStorage
   if (typeof localStorage !== "undefined") {
     const observer = new MutationObserver(() => {
       const isDark = document.documentElement.classList.contains("dark");
