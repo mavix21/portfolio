@@ -1,0 +1,86 @@
+---
+import type { Language } from "@/i18n/ui";
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+---
+
+<div id="datetime-display">
+  <p
+    class="mt-4 font-sans text-xs leading-tight text-muted-foreground"
+    id="datetime-text"
+  >
+    <!-- Initial date will be set by JavaScript -->
+  </p>
+  <p class="font-sans text-[11px] text-muted-foreground opacity-90">
+    GMT-5 - Lima/Peru
+  </p>
+</div>
+
+<script is:inline>
+  let timer;
+
+  function getCurrentLanguage() {
+    // Extract language from URL pathname
+    const pathname = window.location.pathname;
+    const pathSegments = pathname.split("/").filter(Boolean);
+
+    // Check if first segment is a language code
+    if (pathSegments.length > 0) {
+      const potentialLang = pathSegments[0];
+      if (potentialLang === "en" || potentialLang === "es") {
+        return potentialLang;
+      }
+    }
+
+    // Default to Spanish if no language prefix
+    return "es";
+  }
+
+  function updateDateTime() {
+    const now = new Date();
+    const currentLang = getCurrentLanguage();
+
+    const dateString = new Intl.DateTimeFormat(currentLang, {
+      dateStyle: "long",
+      timeStyle: "medium",
+      timeZone: "America/Lima",
+    }).format(now);
+
+    const textElement = document.getElementById("datetime-text");
+    if (textElement) {
+      textElement.textContent = dateString;
+    }
+  }
+
+  function startTimer() {
+    // Clear any existing timer
+    if (timer) {
+      clearInterval(timer);
+    }
+
+    // Update immediately
+    updateDateTime();
+
+    // Start new timer
+    timer = setInterval(updateDateTime, 1000);
+  }
+
+  // Start on initial load
+  startTimer();
+
+  // Handle view transitions
+  document.addEventListener("astro:page-load", startTimer);
+  document.addEventListener("astro:after-swap", startTimer);
+
+  // Clean up before navigation
+  document.addEventListener("astro:before-preparation", () => {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  });
+</script>

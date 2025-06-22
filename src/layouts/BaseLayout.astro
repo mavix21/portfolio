@@ -1,5 +1,5 @@
 ---
-import DateTimeDisplay from "@/components/DateTimeDisplay";
+import DateTimeDisplay from "@/components/DateTimeDisplay.astro";
 import BaseHead from "../components/BaseHead.astro";
 import {
   getLangFromUrl,
@@ -144,7 +144,7 @@ const pathnames = getLocalizedPathnames(Astro.url.pathname);
               href={getLocalizedPathname("/", lang)}
               class="font-serif text-2xl font-normal">MV</a
             >
-            <DateTimeDisplay lang={lang} client:visible />
+            <DateTimeDisplay lang={lang} />
           </div>
 
           {/* Separator */}
