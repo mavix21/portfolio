@@ -24,16 +24,19 @@ export function ThemeSwitcher({ lang, className }: Props) {
     "theme-light" | "dark" | "system"
   >("theme-light");
 
+  // Initialize theme from current DOM state
   React.useEffect(() => {
     const isDarkMode = document.documentElement.classList.contains("dark");
     setThemeState(isDarkMode ? "dark" : "theme-light");
   }, []);
 
+  // Apply theme changes to DOM (localStorage is handled by inline script)
   React.useEffect(() => {
     const isDark =
       theme === "dark" ||
       (theme === "system" &&
         window.matchMedia("(prefers-color-scheme: dark)").matches);
+
     document.documentElement.classList[isDark ? "add" : "remove"]("dark");
   }, [theme]);
 
