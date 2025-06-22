@@ -139,3 +139,31 @@
     scroll-behavior: smooth;
   }
 }
+
+@utility custom-underline {
+  position: relative;
+  display: inline-block;
+  overflow: visible;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.07em;
+    height: 1px; /* Thinner underline */
+    width: 100%;
+    max-width: 100%;
+    background: var(--foreground);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+}
+
+@utility custom-underline-active {
+  &::after {
+    transform: scaleX(1);
+  }
+}
