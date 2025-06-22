@@ -77,7 +77,7 @@ const pathnames = getLocalizedPathnames(Astro.url.pathname);
 
       {/* Mobile Header */}
       <header
-        class="group relative h-14 border bg-background/95 px-4 py-2 backdrop-blur-sm md:hidden"
+        class="group relative h-14 border border-t-0 bg-background/95 px-4 py-2 backdrop-blur-sm md:hidden"
       >
         <div class="flex items-center justify-between">
           {/* Logo */}
@@ -117,10 +117,10 @@ const pathnames = getLocalizedPathnames(Astro.url.pathname);
               <ThemeSwitcher
                 lang={lang}
                 className="-ml-4 text-muted-foreground"
-                client:visible
+                client:load
               />
               <LanguageSwitcher
-                client:visible
+                client:load
                 lang={lang}
                 pathnames={pathnames}
                 className="-ml-4 text-muted-foreground"
@@ -161,13 +161,13 @@ const pathnames = getLocalizedPathnames(Astro.url.pathname);
           <div class="flex flex-shrink-0 flex-col gap-2">
             <ThemeSwitcher
               lang={lang}
-              client:visible
+              client:load
               className="-ml-2 text-muted-foreground"
             />
             <LanguageSwitcher
               lang={lang}
               pathnames={pathnames}
-              client:visible
+              client:load
               className="-ml-2 text-muted-foreground"
             />
           </div>
@@ -179,7 +179,7 @@ const pathnames = getLocalizedPathnames(Astro.url.pathname);
         {/* Main Content Area */}
         <div class="grid h-full flex-1 grid-rows-[1fr_auto] overflow-y-auto">
           {/* Main Content */}
-          <div class="animate-fade-in-up p-4 pt-16 md:h-full md:pt-24">
+          <div class="animate-fade-in-up p-4 pt-32 md:h-full md:pt-24">
             <slot />
           </div>
 
