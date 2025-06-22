@@ -76,10 +76,10 @@ const navSections = [
             const isActive = Astro.url.pathname === item.href;
             return (
               <li>
-                <a href={item.href} class={"group font-sans text-sm"}>
+                <a href={item.href} class="group/nav-item font-sans text-sm">
                   <span
                     class={cn(
-                      "custom-underline block w-fit transition-colors duration-200 ease-in-out group-hover:custom-underline-active group-hover:text-foreground group-focus:custom-underline-active group-focus:text-foreground",
+                      "custom-underline block w-fit transition-colors duration-200 ease-in-out group-hover/nav-item:custom-underline-active group-hover/nav-item:text-foreground group-focus/nav-item:custom-underline-active group-focus/nav-item:text-foreground",
                       isActive
                         ? "custom-underline-active text-foreground"
                         : "text-muted-foreground",
