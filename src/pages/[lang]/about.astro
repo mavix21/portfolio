@@ -1,0 +1,119 @@
+---
+import Layout from "../../layouts/BaseLayout.astro";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { LANGUAGES_KEYS } from "../../i18n/ui";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+export async function getStaticPaths() {
+  return LANGUAGES_KEYS.map((lang) => {
+    return { params: { lang } };
+  });
+}
+---
+
+<Layout title={t("about.title")} description={t("about.foundation.p1")}>
+  <div
+    class="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-[2.5em] text-sm md:text-base"
+  >
+    <!-- Page Title -->
+    <h1 class="font-serif text-4xl font-light text-foreground md:text-5xl">
+      {t("about.title")}
+    </h1>
+
+    <!-- Professional Photo Placeholder -->
+    <!-- <div class="aspect-square w-48 overflow-hidden rounded-lg bg-muted md:w-64">
+      <div
+        class="flex h-full w-full items-center justify-center text-muted-foreground"
+      >
+        <span class="text-sm">Professional Photo</span>
+      </div>
+    </div> -->
+
+    <!-- ACT 1: The Foundation -->
+    <section class="space-y-[1em]">
+      <p class="font-sans leading-relaxed text-pretty text-muted-foreground">
+        {t("about.foundation.p1")}
+      </p>
+      <p class="font-sans leading-relaxed text-pretty text-muted-foreground">
+        {t("about.foundation.p2")}
+      </p>
+    </section>
+
+    <!-- ACT 2: The Craft -->
+    <section class="space-y-[1em]">
+      <p class="font-sans leading-relaxed text-pretty text-muted-foreground">
+        {t("about.craft.p1")}
+      </p>
+      <p class="font-sans leading-relaxed text-pretty text-muted-foreground">
+        {t("about.craft.p2")}
+      </p>
+    </section>
+
+    <!-- ACT 3: The Vision -->
+    <section class="space-y-[1em]">
+      <p class="font-sans leading-relaxed text-pretty text-muted-foreground">
+        {t("about.vision.p1")}
+      </p>
+      <p class="font-sans leading-relaxed text-pretty text-muted-foreground">
+        {t("about.vision.p2")}
+      </p>
+      <p class="font-sans leading-relaxed text-pretty text-foreground">
+        {t("about.vision.cta")}
+      </p>
+    </section>
+
+    <!-- Supplementary Modules -->
+    <div class="grid gap-8 md:grid-cols-2">
+      <!-- Currently Learning Module -->
+      <div class="space-y-4">
+        <h2 class="font-serif text-xl font-light text-foreground">
+          {t("about.learning.title")}
+        </h2>
+        <ul class="space-y-2">
+          <li class="font-sans text-sm text-muted-foreground">Effect.ts</li>
+          <li class="font-sans text-sm text-muted-foreground">
+            Decentralized Architectures
+          </li>
+          <li class="font-sans text-sm text-muted-foreground">
+            Rust (exploring)
+          </li>
+        </ul>
+      </div>
+
+      <!-- Values Module -->
+      <div class="space-y-4">
+        <h2 class="font-serif text-xl font-light text-foreground">
+          {t("about.values.title")}
+        </h2>
+        <div class="space-y-4">
+          <div class="space-y-1">
+            <h3 class="font-sans text-sm font-medium text-foreground">
+              {t("about.values.quality.title")}
+            </h3>
+            <p class="font-sans text-xs text-muted-foreground">
+              {t("about.values.quality.desc")}
+            </p>
+          </div>
+          <div class="space-y-1">
+            <h3 class="font-sans text-sm font-medium text-foreground">
+              {t("about.values.collaboration.title")}
+            </h3>
+            <p class="font-sans text-xs text-muted-foreground">
+              {t("about.values.collaboration.desc")}
+            </p>
+          </div>
+          <div class="space-y-1">
+            <h3 class="font-sans text-sm font-medium text-foreground">
+              {t("about.values.learning.title")}
+            </h3>
+            <p class="font-sans text-xs text-muted-foreground">
+              {t("about.values.learning.desc")}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
