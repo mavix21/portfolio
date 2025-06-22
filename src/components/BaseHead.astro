@@ -2,6 +2,7 @@
 import { Font } from "astro:assets";
 import { getLocalizedPathname, pathnameIsInLanguage } from "../i18n/utils";
 import { DEFAULT_LANGUAGE, LANGUAGES_KEYS } from "../i18n/ui";
+import { ClientRouter } from "astro:transitions";
 
 import "../styles/global.css";
 
@@ -31,6 +32,8 @@ const alternateLinks = alternateLanguages.map((lang) => ({
 <meta name="viewport" content="width=device-width" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
+
+<ClientRouter />
 
 <!-- Font preloads -->
 <Font cssVariable="--font-geist" preload />
