@@ -1,10 +1,6 @@
 ---
 import { Font } from "astro:assets";
-import {
-  getLangFromUrl,
-  getLocalizedPathname,
-  pathnameIsInLanguage,
-} from "../i18n/utils";
+import { getLocalizedPathname, pathnameIsInLanguage } from "../i18n/utils";
 import { DEFAULT_LANGUAGE, LANGUAGES_KEYS } from "../i18n/ui";
 
 import "../styles/global.css";
@@ -38,6 +34,7 @@ const alternateLinks = alternateLanguages.map((lang) => ({
 
 <!-- Font preloads -->
 <Font cssVariable="--font-geist" preload />
+<Font cssVariable="--font-newsreader" preload />
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
@@ -45,7 +42,7 @@ const alternateLinks = alternateLanguages.map((lang) => ({
 <meta name="description" content={description} />
 
 <!-- Canonical URL -->
-<!-- <link rel="canonical" href={canonicalUrl} /> -->
+<link rel="canonical" href={canonicalUrl} />
 
 <!-- Alternate URLs -->
 {
