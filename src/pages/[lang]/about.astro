@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 
 <Layout title={t("about.title")} description={t("about.foundation.p1")}>
   <div
-    class="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-[2.5em] text-sm md:text-base"
+    class="mx-auto flex w-full max-w-[62ch] flex-1 flex-col gap-[2.5em] text-sm md:text-base"
   >
     <!-- Page Title -->
     <h1 class="font-serif text-4xl font-light text-foreground md:text-5xl">
@@ -65,10 +65,10 @@ export async function getStaticPaths() {
     </section>
 
     <!-- Supplementary Modules -->
-    <div class="grid gap-8 md:grid-cols-2">
+    <div class="grid gap-4 md:grid-cols-2">
       <!-- Currently Learning Module -->
-      <div class="space-y-4">
-        <h2 class="font-serif text-xl font-light text-foreground">
+      <div class="space-y-4 rounded-xs border bg-card p-4">
+        <h2 class="font-serif text-xl text-foreground">
           {t("about.learning.title")}
         </h2>
         <ul class="space-y-2">
@@ -83,8 +83,8 @@ export async function getStaticPaths() {
       </div>
 
       <!-- Values Module -->
-      <div class="space-y-4">
-        <h2 class="font-serif text-xl font-light text-foreground">
+      <div class="space-y-4 rounded-xs border bg-card p-4">
+        <h2 class="font-serif text-xl text-foreground">
           {t("about.values.title")}
         </h2>
         <div class="space-y-4">
