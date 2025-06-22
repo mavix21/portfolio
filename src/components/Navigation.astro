@@ -54,8 +54,14 @@ const navSections = [
         label: t("nav.twitter"),
       },
       {
-        href: getLocalizedPathname("/linkedin", lang),
+        href: "https://www.linkedin.com/in/marcelo-vizcarra-7459841b1/",
         label: t("nav.linkedin"),
+        isExternal: true,
+      },
+      {
+        href: "https://github.com/mavix21",
+        label: t("nav.github"),
+        isExternal: true,
       },
     ],
   },
@@ -76,7 +82,11 @@ const navSections = [
             const isActive = Astro.url.pathname === item.href;
             return (
               <li>
-                <a href={item.href} class="group/nav-item font-sans text-sm">
+                <a
+                  href={item.href}
+                  class="group/nav-item font-sans text-sm"
+                  target={item.isExternal ? "_blank" : "_self"}
+                >
                   <span
                     class={cn(
                       "custom-underline block w-fit transition-colors duration-200 ease-in-out group-hover/nav-item:custom-underline-active group-hover/nav-item:text-foreground group-focus/nav-item:custom-underline-active group-focus/nav-item:text-foreground",
