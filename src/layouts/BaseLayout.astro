@@ -18,7 +18,33 @@ const lang = getLangFromUrl(Astro.url);
 const pathnames = getLocalizedPathnames(Astro.url.pathname);
 ---
 
-<!doctype html>
+<script is:inline>
+  const getThemePreference = () => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
+    }
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+
+  const isDark = getThemePreference() === "dark";
+  document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+  if (typeof localStorage !== "undefined") {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+</script>
+
 <html lang={lang}>
   <BaseHead title={title} description={description} />
   <body>
@@ -66,12 +92,16 @@ const pathnames = getLocalizedPathnames(Astro.url.pathname);
             class="translate-y-4 pb-8 opacity-0 transition-all delay-200 duration-300 ease-in-out group-peer-checked:translate-y-0 group-peer-checked:opacity-100"
           >
             <div class="flex flex-col gap-4">
-              <ThemeSwitcher lang={lang} className="-ml-4" client:visible />
+              <ThemeSwitcher
+                lang={lang}
+                className="-ml-4 text-muted-foreground"
+                client:visible
+              />
               <LanguageSwitcher
                 client:visible
                 lang={lang}
                 pathnames={pathnames}
-                className="-ml-4"
+                className="-ml-4 text-muted-foreground"
               />
             </div>
           </div>
@@ -80,16 +110,16 @@ const pathnames = getLocalizedPathnames(Astro.url.pathname);
 
       {/* Frame border */}
       <div
-        class="flex flex-1 border border-t-0 bg-background p-4 md:rounded md:border-t"
+        class="flex h-full flex-1 overflow-y-hidden border border-t-0 bg-background md:rounded md:border"
       >
         {/* Left Sidebar */}
         <div
-          class="sticky top-0 z-10 hidden h-full w-64 flex-col space-y-8 border-r pr-4 md:flex"
+          class="sticky top-0 z-10 hidden h-full w-64 flex-col space-y-8 border-r p-4 md:flex"
         >
           {/* Header Section */}
           <div class="flex-shrink-0">
             <a href="/" class="font-serif text-2xl font-normal">MV</a>
-            <DateTimeDisplay lang={lang} client:load />
+            <DateTimeDisplay lang={lang} client:visible />
           </div>
 
           {/* Separator */}
@@ -99,30 +129,43 @@ const pathnames = getLocalizedPathnames(Astro.url.pathname);
           <div
             class="scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent flex-1 overflow-y-auto"
           >
-            <Navigation />
+            <Navigation lang={lang} />
+          </div>
+
+          {/* Footer Section */}
+          <div class="flex flex-shrink-0 flex-col gap-2">
+            <ThemeSwitcher
+              lang={lang}
+              client:visible
+              className="-ml-2 text-muted-foreground"
+            />
+            <LanguageSwitcher
+              lang={lang}
+              pathnames={pathnames}
+              client:visible
+              className="-ml-2 text-muted-foreground"
+            />
           </div>
 
           {/* Separator */}
-          <div class="h-px w-full bg-border"></div>
-
-          {/* Footer Section */}
-          <div class="flex flex-shrink-0 flex-col gap-4">
-            <ThemeSwitcher lang={lang} client:load />
-            <LanguageSwitcher lang={lang} pathnames={pathnames} />
-          </div>
+          <!-- <div class="h-px w-full bg-border"></div> -->
         </div>
 
         {/* Main Content Area */}
-        <div class="flex h-full flex-1 flex-col">
+        <div
+          class="grid h-full flex-1 overflow-y-auto md:grid-rows-[1fr_auto] md:overflow-y-hidden"
+        >
           {/* Main Content */}
-          <div class="flex-1 animate-fade-in-up overflow-y-auto md:pl-4">
+          <div
+            class="animate-fade-in-up p-4 pt-16 md:h-full md:overflow-y-auto md:pt-24"
+          >
             <slot />
           </div>
 
           {/* Footer */}
-          <footer class="border-t border-border pt-4 md:ml-4">
+          <footer class="border-t border-border py-2 md:ml-4">
             <div class="text-center text-xs text-muted-foreground">
-              © 2024 All rights reserved
+              © 2025 All rights reserved
             </div>
           </footer>
         </div>
