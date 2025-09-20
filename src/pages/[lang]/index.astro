@@ -1,7 +1,11 @@
 ---
 import Layout from "../../layouts/BaseLayout.astro";
 
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import {
+  getLangFromUrl,
+  getLocalizedPathname,
+  useTranslations,
+} from "../../i18n/utils";
 import { LANGUAGES_KEYS } from "../../i18n/ui";
 import { ArrowRight } from "lucide-react";
 
@@ -28,7 +32,7 @@ export async function getStaticPaths() {
       {t("home.description1")}
     </p>
     <a
-      href="/projects"
+      href={getLocalizedPathname("/projects", lang)}
       class="group custom-underline inline-flex w-fit items-center text-xs duration-200 ease-in-out hover:custom-underline-active md:text-sm"
     >
       {t("home.exploreProjects")}
