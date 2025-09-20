@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -137,6 +138,10 @@
 
   html {
     scroll-behavior: smooth;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
