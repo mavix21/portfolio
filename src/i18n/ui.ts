@@ -96,6 +96,7 @@ export const ui = {
     "nav.mail": "Mail",
     "nav.twitter": "Twitter",
     "nav.linkedin": "LinkedIn",
+    "nav.github": "GitHub",
     "nav.readcv": "Read.cv",
     "nav.webInterface": "WEB INTERFACE",
     "nav.contact": "CONTACT",
